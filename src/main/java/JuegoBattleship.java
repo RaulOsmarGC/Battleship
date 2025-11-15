@@ -1,4 +1,3 @@
-// JuegoBattleship.java
 import java.util.*;
 
 public class JuegoBattleship {
@@ -170,40 +169,22 @@ public class JuegoBattleship {
         return true;
     }
 
-    public void mostrarTableroPropio() {
-        System.out.println("\n=== TU TABLERO ===");
-        mostrarTablero(tableroPropio);
+    public char[][] getTableroPropio() {
+        return this.tableroPropio;
+    }
 
-        // Mostrar estado de barcos
-        System.out.println("\nEstado de tus barcos:");
+    public char[][] getTableroEnemigo() {
+        return this.tableroEnemigo;
+    }
+
+    public Map<String, String> getEstadoBarcos() {
+        Map<String, String> estado = new HashMap<>();
         for (String barco : barcos.keySet()) {
             int impactos = impactosPorBarco.getOrDefault(barco, 0);
             int tamanio = barcos.get(barco);
-            String estado = (impactos >= tamanio) ? "HUNDIDO" : impactos + "/" + tamanio;
-            System.out.println("  " + barco + ": " + estado);
+            String estadoBarco = (impactos >= tamanio) ? "HUNDIDO" : impactos + "/" + tamanio;
+            estado.put(barco, estadoBarco);
         }
-    }
-
-    public void mostrarTableroEnemigo() {
-        System.out.println("\n=== TABLERO ENEMIGO ===");
-        mostrarTablero(tableroEnemigo);
-    }
-
-    private void mostrarTablero(char[][] tablero) {
-        System.out.print("  ");
-        for (int i = 0; i < TAMANIO_TABLERO; i++) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < TAMANIO_TABLERO; i++) {
-            System.out.print(i + " ");
-            for (int j = 0; j < TAMANIO_TABLERO; j++) {
-                System.out.print(tablero[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println("\nLeyenda: ~=Agua, ?=Desconocido, X=Impacto, O=Fallo, Letras=Barcos");
+        return estado;
     }
 }
